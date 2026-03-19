@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="navbar-brand">Admin Dashboard</div>
+    <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+</nav>
+
+<div class="container">
+
+    <!-- USERS SECTION -->
+    <h2>Users</h2>
+    <div class="card">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user[0] }}</td>
+                    <!-- first_name + last_name -->
+                    <td>{{ user[1] }} {{ user[3] }}</td>
+                    <!-- email -->
+                    <td>{{ user[5] }}</td>
+                    <!-- role -->
+                    <td>{{ user[7] }}</td>
+                    <td>
+                        {% if user[0] != session['user_id'] %}
+                        <a href="{{ url_for('delete_user', user_id=user[0]) }}"
+                           onclick="return confirm('Are you sure you want to delete this user?')"
+                           class="delete-btn">
+                           Delete
+                        </a>
+                        {% else %}
+                        <span style="color: gray;">Current Admin</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- COMPLAINTS SECTION -->
+    <h2>Complaints</h2>
+    <div class="card">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User ID</th>
+                    <th>Message</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for complaint in complaints %}
+                <tr>
+                    <td>{{ complaint[0] }}</td>
+                    <td>{{ complaint[1] }}</td>
+                    <td>{{ complaint[2] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

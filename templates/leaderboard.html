@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Leaderboard</h2>
+
+{% if data %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for row in data %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No submissions yet.</p>
+{% endif %}
+
+<a href="/student" class="btn btn-primary mt-3">Back to Challenges</a>
+{% endblock %}

@@ -1,0 +1,61 @@
+<!-- templates/company_dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+    <h2>Welcome, Company</h2>
+    <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    </div>
+
+
+    <div class="container">
+
+        <h3>Your Challenges</h3>
+        {% for challenge in challenges %}
+        <div class="card">
+            <h5>{{ challenge[2] }}</h5> <!-- Title -->
+            <p>{{ challenge[3] }}</p>   <!-- Description -->
+            <p><strong>Correct Answer:</strong> {{ challenge[4] }}</p>
+
+            <!-- Buttons -->
+            <form action="{{ url_for('leaderboard', challenge_id=challenge[0]) }}" method="get" style="display:inline;">
+                <button type="submit">View Leaderboard</button>
+            </form>
+
+            <form action="{{ url_for('declare_winner', challenge_id=challenge[0]) }}" method="post" style="display:inline; margin-left:10px;">
+                <select name="winner_id" required>
+                    <option value="">Select Winner</option>
+                    {% for submission in get_submissions(challenge[0]) %}
+                        <option value="{{ submission[0] }}">{{ submission[1] }} (Score: {{ submission[2] }})</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Declare Winner</button>
+            </form>
+
+            {% if get_winner(challenge[0]) %}
+            <p><strong>Current Winner:</strong> {{ get_winner(challenge[0]) }}</p>
+            {% endif %}
+        </div>
+        {% else %}
+        <p>No challenges added yet.</p>
+        {% endfor %}
+
+        <h3>Add New Challenge</h3>
+        <div class="card">
+            <form action="{{ url_for('add_challenge') }}" method="post">
+                <input type="text" name="title" placeholder="Challenge Title" required>
+                <textarea name="description" placeholder="Challenge Description" required></textarea>
+                <textarea name="correct_answer" placeholder="Correct Answer / Model Answer" required></textarea>
+                <button type="submit">Add Challenge</button>
+            </form>
+        </div>
+
+    </div>
+</body>
+</html>

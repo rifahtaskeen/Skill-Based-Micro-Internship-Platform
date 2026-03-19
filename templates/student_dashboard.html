@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Available Challenges</h2>
+
+{% if challenges %}
+    <ul class="list-group">
+    {% for challenge in challenges %}
+        <li class="list-group-item">
+
+            <!-- Company Info -->
+            <div class="mb-2">
+                {% if challenge[7] %}
+                <img src="{{ url_for('static', filename='uploads/' + challenge[7]) }}"
+                    alt="Company Logo"
+                    width="60"
+                    style="border-radius:8px;">
+                {% endif %}
+
+                <strong>{{ challenge[5] }} {{ challenge[6] }}</strong>
+                <p class="text-muted">{{ challenge[7] }}</p>
+            </div>
+
+            <!-- Challenge Info -->
+            <h5>{{ challenge[2] }}</h5>
+            <p>{{ challenge[3] }}</p>
+
+            <!-- Submission Form -->
+            <form action="/submit/{{ challenge[0] }}" method="POST">
+                <textarea name="submission_answer" rows="4" class="form-control"
+        placeholder="Enter your answer here" required></textarea><br><br>
+                <button type="submit" class="btn btn-primary">Submit Solution</button>
+            </form>
+
+            <a href="/leaderboard/{{ challenge[0] }}" class="btn btn-info mt-2">
+                View Leaderboard
+            </a>
+        </li>
+
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No challenges available at the moment.</p>
+{% endif %}
+
+<a href="/complaint" class="btn btn-warning mt-3">Submit a Complaint</a>
+{% endblock %}

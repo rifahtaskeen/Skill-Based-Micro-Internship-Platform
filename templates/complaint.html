@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Submit a Complaint</h2>
+<form action="/complaint" method="POST">
+    <textarea name="message" class="form-control mb-2" rows="4" placeholder="Enter your complaint here" required></textarea>
+    <button type="submit" class="btn btn-danger">Submit</button>
+</form>
+<a href="/student" class="btn btn-secondary mt-2">Back to Dashboard</a>
+{% endblock %}

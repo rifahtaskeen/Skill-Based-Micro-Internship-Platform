@@ -1,0 +1,46 @@
+<!-- templates/register.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card" style="max-width: 500px; margin: auto;">
+    <h2>Register</h2>
+    <form method="POST" action="/register" enctype="multipart/form-data">
+
+        <input type="text" name="first_name" placeholder="First Name" required>
+        <input type="text" name="middle_name" placeholder="Middle Name">
+        <input type="text" name="last_name" placeholder="Last Name" required>
+
+        <input type="text" name="phone" placeholder="Phone Number" required>
+
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+
+        <select name="role" id="role" required onchange="toggleCompanyFields()">
+        <option value="" disabled selected>Select Role</option>
+        <option value="admin">Admin</option>
+        <option value="company">Company</option>
+        <option value="student">Student</option>
+</select>
+
+<!-- Company extra fields -->
+<div id="companyFields" style="display:none;">
+    <textarea name="company_description" placeholder="Company Description"></textarea>
+    <input type="file" name="company_logo" accept="image/*">
+</div>
+
+<button type="submit">Register</button>
+
+<script>
+function toggleCompanyFields() {
+    const role = document.getElementById("role").value;
+    document.getElementById("companyFields").style.display =
+        role === "company" ? "block" : "none";
+}
+</script>
+    </form>
+
+    <p style="text-align: center; margin-top: 15px;">
+        Already have an account? <a href="/">Login here</a>
+    </p>
+</div>
+{% endblock %}

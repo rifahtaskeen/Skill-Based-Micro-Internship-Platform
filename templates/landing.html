@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="landing-container">
+    <p>Welcome to Skill Match.</p>
+    <p>One last step towards reaching your goal.</p>
+
+    <div class="landing-buttons">
+        <a href="{{ url_for('register') }}" class="landing-btn">Sign Up</a>
+        <a href="{{ url_for('login') }}" class="landing-btn outline">Log In</a>
+    </div>
+
+</div>
+
+{% endblock %}
